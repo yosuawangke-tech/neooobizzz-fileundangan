@@ -5,488 +5,710 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Wedding of Rizky & Putri</title>
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- TAILWIND CSS -->
+    <!-- Meta Tags untuk SEO & Sharing -->
+    <meta property="og:title" content="Undangan Pernikahan Rizky & Putri">
+    <meta property="og:description" content="Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FONT AWESOME -->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+    <!-- Konfigurasi Tailwind & Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C5A059', /* Warna emas yang lebih soft dan elegan */
+                        'gold-light': '#E5C98A',
+                        'royal-navy': '#0f172a', /* GANTI: Dari Green ke Deep Royal Navy */
+                        'navy-light': '#1e293b',
+                        cream: '#fdfbf7',
+                        'wax-red': '#aa2b2b',
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* --- WARNA & VARIABEL --- */
-        :root {
-            --env-color: #1e293b; 
-            --env-dark: #0f172a; 
-            --bg-site: #fdfbf7;
-            --accent-gold: #c29d59;
-        }
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-site);
-            margin: 0;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* --- 1. AMPLOP MEWAH --- */
-        #opening-screen {
+        /* --- ENVELOPE SYSTEM IMPROVED --- */
+        #envelope-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1615800098779-1be32e60cca3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex; justify-content: center; align-items: center;
-            flex-direction: column;
-            z-index: 9999;
-            transition: opacity 1.5s ease-out, visibility 1.5s;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95); /* Background gelap senada tema */
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s;
         }
 
-        .envelope-container {
+        .envelope-wrapper {
             position: relative;
-            width: 320px; height: 220px;
-            background-color: var(--env-dark);
-            border-radius: 5px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .envelope-container:hover { transform: scale(1.02); }
-
-        /* Kartu di dalam */
-        .card-inside {
-            position: absolute; bottom: 5px; left: 50%;
-            transform: translateX(-50%);
-            width: 290px; height: 190px;
-            background: #fff url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            border-radius: 5px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1; 
-            transition: transform 1s ease-in-out 0.5s;
-            padding: 10px; text-align: center;
         }
 
-        /* Bagian Amplop */
-        .envelope-front {
-            position: absolute; bottom: 0; left: 0; width: 0; height: 0;
-            border-style: solid; border-width: 0 160px 130px 160px;
-            border-color: transparent transparent var(--env-color) transparent;
-            z-index: 10; pointer-events: none; filter: drop-shadow(0 -2px 5px rgba(0,0,0,0.1));
-        }
-        .envelope-left {
-            position: absolute; top: 0; bottom: 0; left: 0; width: 0; height: 0; border-style: solid;
-            border-width: 110px 0 110px 120px; border-color: transparent transparent transparent var(--env-dark);
-            z-index: 9; filter: brightness(0.9);
-        }
-        .envelope-right {
-            position: absolute; top: 0; bottom: 0; right: 0; width: 0; height: 0; border-style: solid;
-            border-width: 110px 120px 110px 0; border-color: transparent var(--env-dark) transparent transparent;
-            z-index: 9; filter: brightness(0.9);
-        }
-        .envelope-flap {
-            position: absolute; top: 0; left: 0; width: 0; height: 0;
-            border-style: solid; border-width: 130px 160px 0 160px;
-            border-color: var(--env-color) transparent transparent transparent;
-            transform-origin: top; z-index: 11;
-            transition: transform 0.6s ease-in-out 0s, z-index 0.6s;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: #fdfbf7;
+            border-radius: 0 0 5px 5px; /* Radius bawah saja */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: transform 0.8s ease;
+            z-index: 10;
+            overflow: hidden; /* PENTING: Mencegah kertas 'mengintip' */
         }
 
-        /* Stiker Seal Animasi */
+        /* Bagian Segitiga Penutup (Flap) */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0; 
+            height: 0; 
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid #e6dfc8;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out 0.2s, z-index 0.2s;
+            z-index: 20; /* Flap di atas segalanya saat tertutup */
+        }
+
+        /* Bagian Kantong Depan (Untuk efek kedalaman) */
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #f2efe6;
+            border-right: 160px solid #f2efe6;
+            border-bottom: 110px solid #eaddcf; 
+            border-top: 110px solid transparent;
+            border-radius: 0 0 5px 5px;
+            z-index: 15;
+        }
+
+        /* Kertas Undangan di Dalam (Invitation Card) */
+        .invitation-card {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 300px;
+            height: 200px;
+            background: #fff;
+            border: 1px solid #ddd;
+            z-index: 5; /* Di belakang pocket */
+            transition: transform 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* WAX SEAL STYLE */
         .wax-seal {
-            position: absolute; top: 100px; left: 50%; transform: translate(-50%, -50%);
-            width: 50px; height: 50px;
-            background: radial-gradient(circle at 30% 30%, #ef4444, #991b1b);
-            border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-            display: flex; justify-content: center; align-items: center;
-            color: white; font-family: 'Great Vibes', cursive; font-size: 24px;
-            z-index: 12; transition: opacity 0.4s;
-            animation: pulse-gold 2s infinite;
-        }
-        @keyframes pulse-gold {
-            0% { box-shadow: 0 0 0 0 rgba(194, 157, 89, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(194, 157, 89, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(194, 157, 89, 0); }
-        }
-
-        /* Animasi Buka */
-        .envelope-container.open .envelope-flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-container.open .wax-seal { opacity: 0; pointer-events: none; }
-        .envelope-container.open .card-inside {
-            transform: translateX(-50%) translateY(-150px);
-            z-index: 15; transition-delay: 0.4s;
-        }
-        .open-btn {
-            margin-top: 50px; background-color: white; color: var(--env-dark);
-            padding: 12px 40px; border-radius: 50px; border: none;
-            font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.3); cursor: pointer; transition: transform 0.2s, opacity 0.5s;
-            z-index: 20;
+            position: absolute;
+            top: 85px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at 30% 30%, #d64545, #8a1c1c);
+            border-radius: 50%;
+            box-shadow: 3px 6px 10px rgba(0,0,0,0.4);
+            z-index: 30; /* Paling atas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #5c0b0b;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 4px solid rgba(255,255,255,0.1);
+            transition: opacity 0.4s;
         }
 
-        /* --- 2. WEBSITE UTAMA --- */
-        #main-website {
-            opacity: 0; visibility: hidden; transition: opacity 2s ease-in;
-            background-color: var(--bg-site);
+        /* Animation States */
+        .envelope-wrapper.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1; /* Pindah ke belakang saat terbuka */
+            transition-delay: 0s;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.8);
+        }
+
+        .envelope-wrapper.open .invitation-card {
+            transform: translateY(-120px); /* Kertas naik ke atas */
+            transition-delay: 0.4s; /* Tunggu flap terbuka dulu */
+            z-index: 25;
+        }
+
+        .envelope-wrapper.open .envelope {
+            transform: translateY(100px);
+            opacity: 0;
+            transition-delay: 1s;
+        }
+
+        /* Animation Classes for Content */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Edit Mode Highlight */
+        .editable-active {
+            border: 1px dashed #C5A059;
+            background: rgba(197, 160, 89, 0.1);
+            cursor: text;
+            padding: 2px 4px;
+            border-radius: 4px;
             position: relative;
         }
-        #main-website.visible { opacity: 1; visibility: visible; }
+        .editable-active::after {
+            content: '\f303'; /* FontAwesome Pen */
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 10px;
+            color: #C5A059;
+            background: white;
+            padding: 2px;
+            border-radius: 50%;
+            display: none;
+        }
+        .editable-active:hover::after { display: block; }
 
-        /* Floating Petals Animation (Agar lebih hidup) */
-        .falling-leaves {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; overflow: hidden; z-index: 0;
+        /* Floating Music Button */
+        .music-btn { animation: rotate-record 5s linear infinite; }
+        .music-btn.paused { animation-play-state: paused; }
+        @keyframes rotate-record { 100% { transform: rotate(360deg); } }
+
+        /* Leaf Animation Container */
+        #leaf-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
-        .leaf {
-            position: absolute; width: 15px; height: 15px;
-            background: rgba(194, 157, 89, 0.2);
-            border-radius: 50% 0 50% 0;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translate(100px, 110vh) rotate(360deg); opacity: 0; }
+        .leaf { 
+            position: absolute; 
+            width: 12px; height: 12px; 
+            background: #C5A059; 
+            opacity: 0.6; 
+            border-radius: 0px 10px 0px 10px; 
         }
 
-        /* Fonts & Utils */
-        .font-serif-display { font-family: 'Cormorant Garamond', serif; }
-        .font-script { font-family: 'Great Vibes', cursive; }
-        
-        /* Edit Mode Styles */
-        body.edit-mode-active [contenteditable="true"] {
-            border-bottom: 1px dashed #c29d59; cursor: text; background: rgba(255,255,255,0.5);
+        /* Background Pattern for Royal Look */
+        .bg-pattern {
+            background-color: #0f172a;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e293b' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        body.edit-mode-active [contenteditable="true"]:focus {
-            background-color: rgba(255, 235, 205, 0.8); outline: none; border-bottom: 2px solid #b91c1c;
-        }
-        .photo-edit-overlay {
-            display: none; position: absolute; inset: 0;
-            background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;
-            color: white; font-size: 1.5rem; cursor: pointer; z-index: 50;
-            transition: opacity 0.3s; opacity: 0;
-        }
-        .group:hover .photo-edit-overlay { opacity: 1; }
-        body.edit-mode-active .photo-edit-overlay { display: flex; opacity: 0.8; }
-        
-        /* Save Panel */
-        #save-panel {
-            display: none; position: fixed; bottom: 20px; right: 20px;
-            background: #1e293b; color: white; padding: 15px; border-radius: 8px; z-index: 10000;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center;
-            animation: slideIn 0.5s ease-out;
-        }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        .fade-in-up { animation: fadeInUp 1s ease-out forwards; opacity: 0; transform: translateY(20px); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        .delay-100 { animation-delay: 0.2s; }
-        .delay-200 { animation-delay: 0.4s; }
-        .delay-300 { animation-delay: 0.6s; }
-
     </style>
 </head>
-<body>
+<body class="font-sans text-gray-800 bg-cream overflow-x-hidden antialiased">
 
-    <!-- LAYER 1: AMPLOP -->
-    <div id="opening-screen">
-        <div class="envelope-container" id="envelope-container">
-            <div class="envelope-flap">
-                <div class="wax-seal">R&P</div>
-            </div>
-            <div class="envelope-left"></div>
-            <div class="envelope-right"></div>
-            <div class="envelope-front"></div>
-            <div class="card-inside">
-                <div class="flex flex-col justify-center items-center h-full w-full border border-[#c29d59]">
-                    <p class="text-[10px] tracking-[2px] uppercase mb-1">The Wedding</p>
-                    <h1 class="font-script text-3xl my-2" id="envelope-name">Rizky & Putri</h1>
-                    <p class="text-[11px] text-gray-500">Kepada Yth.<br>Bapak/Ibu/Saudara/i</p>
-                </div>
-            </div>
-        </div>
-        <button class="open-btn" onclick="openInvitation()">Buka Undangan</button>
+    <!-- AUDIO PLAYER -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_1e3e8f7f9a.mp3?filename=piano-moment-113904.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING CONTROLS -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        <button onclick="toggleMusic()" id="music-control" class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full shadow-lg flex items-center justify-center text-gold border border-gold hover:bg-gold hover:text-white transition-all duration-300 music-btn paused">
+            <i class="fas fa-music"></i>
+        </button>
+        <button onclick="window.scrollTo(0,0)" class="w-10 h-10 bg-royal-navy text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gold transition-all duration-300">
+            <i class="fas fa-arrow-up text-sm"></i>
+        </button>
     </div>
 
-    <!-- LAYER 2: WEBSITE UTAMA -->
-    <main id="main-website">
-        <audio id="bg-music" loop>
-            <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9855365518.mp3" type="audio/mpeg">
-        </audio>
+    <!-- DAUN JATUH -->
+    <div id="leaf-container"></div>
 
-        <!-- Animation Background -->
-        <div class="falling-leaves" id="leaves-container"></div>
-
-        <!-- PANEL SIMPAN -->
-        <div id="save-panel">
-            <p class="text-xs text-gray-300 mb-2 font-bold uppercase tracking-widest">Editing Mode ON</p>
-            <p class="text-[10px] text-gray-400 mb-3 max-w-[200px]">
-                Anda bisa edit: Teks, Foto Utama, Foto Galeri, dan Info Rekening.
-            </p>
-            <button onclick="downloadNewFile()" class="bg-[#c29d59] hover:bg-[#a38040] text-white text-xs font-bold px-4 py-3 rounded w-full shadow-lg transition">
-                <i class="fas fa-download mr-1"></i> SIMPAN FILE
-            </button>
+    <!-- ENVELOPE OVERLAY SYSTEM -->
+    <div id="envelope-overlay">
+        <div class="envelope-wrapper" id="envelope-wrapper" onclick="openInvitation()">
+            <div class="envelope">
+                <div class="flap"></div>
+                <!-- Kartu di dalam amplop (Visual Only) -->
+                <div class="invitation-card">
+                    <p class="font-serif text-gray-500 text-xs mb-2">Undangan Pernikahan</p>
+                    <h2 class="font-script text-3xl text-gold sync-names-display">Rizky & Putri</h2>
+                    <div class="h-px w-20 bg-gold mt-2"></div>
+                </div>
+                <!-- Pocket (Bagian depan amplop) -->
+                <div class="pocket"></div>
+            </div>
+            
+            <!-- SEAL & CTA -->
+            <div class="wax-seal" id="wax-seal-text">R&P</div>
+            <div class="absolute -bottom-16 w-full text-center text-white animate-pulse-slow">
+                <p class="text-sm font-serif tracking-widest uppercase mb-1">Ketuk untuk membuka</p>
+                <i class="fas fa-chevron-up text-gold"></i>
+            </div>
         </div>
+    </div>
 
-        <!-- HERO SECTION -->
-        <section class="min-h-screen flex flex-col justify-center items-center text-center p-6 relative z-10">
-            <img src="https://img.freepik.com/free-vector/hand-drawn-floral-wreath_53876-89246.jpg?w=740" class="absolute top-0 left-0 w-48 opacity-40 mix-blend-multiply pointer-events-none fade-in-up">
-            <img src="https://img.freepik.com/free-vector/hand-drawn-floral-wreath_53876-89246.jpg?w=740" class="absolute bottom-0 right-0 w-48 opacity-40 mix-blend-multiply transform rotate-180 pointer-events-none fade-in-up delay-300">
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="hidden opacity-0 transition-opacity duration-1000">
 
-            <div class="max-w-3xl w-full">
-                <p class="font-serif-display text-gray-500 tracking-[0.2em] uppercase mb-4 fade-in-up">The Wedding Of</p>
-                
-                <h1 id="main-name" class="font-script text-7xl md:text-8xl text-gray-800 mb-6 leading-tight fade-in-up delay-100 editable-text">
-                    Rizky & Putri
-                </h1>
+        <!-- HERO SECTION (ROYAL NAVY THEME) -->
+        <section class="relative h-screen flex items-center justify-center bg-pattern text-white overflow-hidden">
+            <!-- Decorative Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-royal-navy/50 to-royal-navy z-10"></div>
+            
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1511285560982-1927bb372660?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+                     alt="Background" 
+                     class="w-full h-full object-cover opacity-30 grayscale hover:scale-105 transition-transform duration-[10s]">
+            </div>
+            
+            <div class="relative z-20 text-center px-4 animate-up border border-gold/30 p-12 backdrop-blur-sm bg-royal-navy/30 rounded-lg">
+                <div class="mb-4 text-gold text-2xl"><i class="fas fa-crown"></i></div>
+                <p class="uppercase tracking-[0.4em] text-xs md:text-sm mb-6 font-light" data-editable="true">The Wedding Of</p>
+                <!-- Nama Utama -->
+                <h1 class="font-script text-6xl md:text-8xl mb-6 text-gold sync-names-source drop-shadow-lg" data-editable="true" id="main-names">Rizky & Putri</h1>
+                <div class="flex items-center justify-center gap-6 text-lg md:text-xl font-serif text-gray-200">
+                    <span data-editable="true" class="border-b border-gold pb-1">Minggu</span>
+                    <span class="text-gold text-xs"><i class="fas fa-heart"></i></span>
+                    <span data-editable="true" class="border-b border-gold pb-1">24 Desember 2025</span>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-10 z-20 animate-bounce text-gold">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </div>
+        </section>
 
-                <p class="font-serif-display text-xl text-gray-600 italic mb-10 fade-in-up delay-200 editable-text">
-                    Kami mengundang Anda untuk merayakan pernikahan kami
+        <!-- QUOTE (Clean White) -->
+        <section class="py-24 px-6 max-w-4xl mx-auto text-center bg-cream">
+            <img src="https://pngimg.com/uploads/ornament/ornament_PNG54.png" alt="Ornamen" class="w-24 mx-auto mb-8 opacity-40 grayscale">
+            <div class="fade-in-up">
+                <p class="font-serif italic text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed" data-editable="true">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya."
                 </p>
+                <div class="inline-block border-t border-b border-gold py-2 px-6">
+                    <p class="font-bold text-royal-navy text-sm tracking-widest" data-editable="true">QS. AR-RUM: 21</p>
+                </div>
+            </div>
+        </section>
 
-                <!-- Foto Couple -->
-                <div class="flex justify-center items-center gap-6 md:gap-12 mb-10 fade-in-up delay-200">
-                    <!-- Groom -->
-                    <div class="text-center relative group">
-                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg mx-auto mb-3 relative overflow-hidden">
-                            <img id="img-groom" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
-                            <div class="photo-edit-overlay" onclick="document.getElementById('input-groom').click()"><i class="fas fa-camera"></i></div>
+        <!-- MEMPELAI (Modern & Clean) -->
+        <section class="py-20 bg-white relative">
+            <div class="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-gold opacity-20"></div>
+            <div class="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-gold opacity-20"></div>
+            
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-center items-center gap-16">
+                    
+                    <!-- Pria -->
+                    <div class="text-center w-full md:w-1/3 fade-in-up group">
+                        <div class="relative w-56 h-56 mx-auto mb-8">
+                            <div class="absolute inset-0 border-2 border-gold rounded-full transform translate-x-2 translate-y-2 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="w-full h-full object-cover rounded-full shadow-lg relative z-10 grayscale group-hover:grayscale-0 transition duration-500">
                         </div>
-                        <h3 class="font-serif-display font-bold text-xl editable-text">Rizky Pratama</h3>
-                        <input type="file" id="input-groom" class="hidden" accept="image/*" onchange="changeImage(this, 'img-groom')">
+                        <h3 class="font-script text-5xl text-royal-navy mb-3" data-editable="true">Rizky Pratama</h3>
+                        <p class="text-gray-500 mb-4 text-sm font-serif">Putra Bpk. Fulan & Ibu Fulanah</p>
+                        <a href="#" class="text-gold text-sm tracking-widest hover:text-royal-navy transition border-b border-transparent hover:border-royal-navy">@RIZKY</a>
                     </div>
-                    <div class="font-script text-4xl text-[#c29d59]">&</div>
-                    <!-- Bride -->
-                    <div class="text-center relative group">
-                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg mx-auto mb-3 relative overflow-hidden">
-                            <img id="img-bride" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
-                            <div class="photo-edit-overlay" onclick="document.getElementById('input-bride').click()"><i class="fas fa-camera"></i></div>
+
+                    <div class="text-gold/50 text-6xl font-script opacity-50">&</div>
+
+                    <!-- Wanita -->
+                    <div class="text-center w-full md:w-1/3 fade-in-up group" style="transition-delay: 0.2s;">
+                         <div class="relative w-56 h-56 mx-auto mb-8">
+                            <div class="absolute inset-0 border-2 border-gold rounded-full transform -translate-x-2 translate-y-2 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                                 class="w-full h-full object-cover rounded-full shadow-lg relative z-10 grayscale group-hover:grayscale-0 transition duration-500">
                         </div>
-                        <h3 class="font-serif-display font-bold text-xl editable-text">Putri Aisyah</h3>
-                        <input type="file" id="input-bride" class="hidden" accept="image/*" onchange="changeImage(this, 'img-bride')">
+                        <h3 class="font-script text-5xl text-royal-navy mb-3" data-editable="true">Putri Indah</h3>
+                        <p class="text-gray-500 mb-4 text-sm font-serif">Putri Bpk. Doe & Ibu Jane</p>
+                        <a href="#" class="text-gold text-sm tracking-widest hover:text-royal-navy transition border-b border-transparent hover:border-royal-navy">@PUTRI</a>
                     </div>
-                </div>
 
-                <div class="inline-block bg-white px-8 py-3 rounded-full shadow-sm border border-gray-100 fade-in-up delay-300">
-                    <span class="font-serif-display font-bold text-lg tracking-widest text-[#c29d59] editable-text">
-                        MINGGU, 20 DESEMBER 2025
-                    </span>
                 </div>
             </div>
         </section>
 
-        <!-- NEW: SECTION AYAT -->
-        <section class="py-16 px-4 bg-[#fdfbf7] relative">
-            <div class="max-w-2xl mx-auto text-center p-8 border-y-2 border-[#c29d59]/20 relative">
-                <i class="fas fa-quote-left text-3xl text-[#c29d59]/40 absolute top-4 left-4"></i>
-                <p class="font-serif-display text-lg md:text-xl text-gray-700 leading-relaxed italic editable-text mb-4">
-                    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
-                </p>
-                <p class="font-bold text-[#c29d59] text-sm tracking-widest uppercase editable-text">
-                    QS. AR-RUM: 21
-                </p>
-            </div>
-        </section>
-
-        <!-- EVENT DETAILS -->
-        <section class="py-20 px-4 bg-white relative">
-            <div class="max-w-4xl mx-auto text-center z-10 relative">
-                <i class="fas fa-heart text-[#c29d59] text-2xl mb-6 animate-bounce"></i>
-                <h2 class="font-script text-5xl text-gray-800 mb-12">Rangkaian Acara</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Akad -->
-                    <div class="p-8 border border-gray-100 rounded-lg shadow-lg hover:shadow-xl transition bg-[#fdfbf7] transform hover:-translate-y-2 duration-300">
-                        <div class="w-12 h-12 bg-[#c29d59] text-white rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-handshake"></i></div>
-                        <h3 class="font-serif-display text-2xl font-bold mb-2">Akad Nikah</h3>
-                        <p class="font-bold text-[#c29d59] mb-4 editable-text">08:00 WIB - Selesai</p>
-                        <p class="text-gray-600 leading-relaxed editable-text">Masjid Agung Al-Azhar<br>Jl. Sisingamangaraja, Kebayoran Baru</p>
-                    </div>
-                    <!-- Resepsi -->
-                    <div class="p-8 border border-gray-100 rounded-lg shadow-lg hover:shadow-xl transition bg-[#fdfbf7] transform hover:-translate-y-2 duration-300">
-                        <div class="w-12 h-12 bg-[#c29d59] text-white rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-glass-cheers"></i></div>
-                        <h3 class="font-serif-display text-2xl font-bold mb-2">Resepsi</h3>
-                        <p class="font-bold text-[#c29d59] mb-4 editable-text">11:00 WIB - Selesai</p>
-                        <p class="text-gray-600 leading-relaxed editable-text">Ballroom Hotel Mulia<br>Jl. Asia Afrika, Senayan, Jakarta</p>
+        <!-- EVENT DETAILS (ROYAL NAVY CARD) -->
+        <section class="py-24 bg-pattern relative text-white">
+            <div class="container mx-auto px-4 relative z-10 text-center">
+                <div class="inline-block border border-gold/50 p-2 rounded-full mb-12">
+                    <div class="border border-gold px-12 py-3 rounded-full bg-royal-navy/50 backdrop-blur-sm">
+                        <h2 class="font-serif text-2xl md:text-3xl tracking-wide text-gold">Rangkaian Acara</h2>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- NEW: GALLERY SECTION (EDITABLE) -->
-        <section class="py-20 px-4 bg-[#f8f5f2]">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-script text-5xl text-gray-800 mb-10">Our Moments</h2>
                 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Galeri 1 -->
-                    <div class="aspect-[3/4] overflow-hidden rounded-lg shadow-md relative group bg-gray-200">
-                        <img id="gal-1" src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                        <div class="photo-edit-overlay" onclick="document.getElementById('input-gal-1').click()"><i class="fas fa-camera"></i></div>
-                        <input type="file" id="input-gal-1" class="hidden" accept="image/*" onchange="changeImage(this, 'gal-1')">
+                <div class="flex flex-wrap justify-center gap-10">
+                    <!-- Akad Card -->
+                    <div class="bg-navy-light/80 p-10 rounded-xl border border-white/5 shadow-2xl w-full md:w-[400px] fade-in-up hover:-translate-y-2 transition duration-300">
+                        <div class="text-gold text-4xl mb-6"><i class="fas fa-signature"></i></div>
+                        <h3 class="font-script text-4xl mb-6 text-gold-light">Akad Nikah</h3>
+                        <div class="space-y-4 font-serif text-gray-300">
+                            <p class="text-xl text-white" data-editable="true">08:00 - 10:00 WIB</p>
+                            <hr class="border-white/10 w-1/2 mx-auto">
+                            <p data-editable="true">Masjid Agung Al-Falah</p>
+                            <p class="text-sm text-gray-400" data-editable="true">Jl. Merdeka No. 1, Jakarta</p>
+                        </div>
                     </div>
-                    <!-- Galeri 2 -->
-                    <div class="aspect-[3/4] overflow-hidden rounded-lg shadow-md relative group bg-gray-200">
-                        <img id="gal-2" src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                        <div class="photo-edit-overlay" onclick="document.getElementById('input-gal-2').click()"><i class="fas fa-camera"></i></div>
-                        <input type="file" id="input-gal-2" class="hidden" accept="image/*" onchange="changeImage(this, 'gal-2')">
+
+                    <!-- Resepsi Card -->
+                    <div class="bg-navy-light/80 p-10 rounded-xl border border-white/5 shadow-2xl w-full md:w-[400px] fade-in-up hover:-translate-y-2 transition duration-300" style="transition-delay: 0.2s;">
+                        <div class="text-gold text-4xl mb-6"><i class="fas fa-glass-cheers"></i></div>
+                        <h3 class="font-script text-4xl mb-6 text-gold-light">Resepsi</h3>
+                        <div class="space-y-4 font-serif text-gray-300">
+                            <p class="text-xl text-white" data-editable="true">11:00 - 14:00 WIB</p>
+                            <hr class="border-white/10 w-1/2 mx-auto">
+                            <p data-editable="true">Grand Ballroom Hotel Mulia</p>
+                            <p class="text-sm text-gray-400" data-editable="true">Jl. Sudirman No. 45, Jakarta</p>
+                        </div>
                     </div>
-                    <!-- Galeri 3 -->
-                    <div class="aspect-[3/4] overflow-hidden rounded-lg shadow-md relative group bg-gray-200">
-                        <img id="gal-3" src="https://images.unsplash.com/photo-1529636721157-d4d3d5255d2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                        <div class="photo-edit-overlay" onclick="document.getElementById('input-gal-3').click()"><i class="fas fa-camera"></i></div>
-                        <input type="file" id="input-gal-3" class="hidden" accept="image/*" onchange="changeImage(this, 'gal-3')">
-                    </div>
-                    <!-- Galeri 4 -->
-                    <div class="aspect-[3/4] overflow-hidden rounded-lg shadow-md relative group bg-gray-200">
-                        <img id="gal-4" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                        <div class="photo-edit-overlay" onclick="document.getElementById('input-gal-4').click()"><i class="fas fa-camera"></i></div>
-                        <input type="file" id="input-gal-4" class="hidden" accept="image/*" onchange="changeImage(this, 'gal-4')">
-                    </div>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="mt-16 max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border-4 border-navy-light fade-in-up">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.466453986968!2d106.82715331476906!3d-6.175110995527638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764587d%3A0x6295556276800000!2sMonas!5e0!3m2!1sen!2sid!4v1615467812345!5m2!1sen!2sid" 
+                        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" class="grayscale hover:grayscale-0 transition duration-700">
+                    </iframe>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="block bg-gold py-3 text-royal-navy font-bold hover:bg-white transition text-center">
+                        <i class="fas fa-location-arrow mr-2"></i> PETUNJUK ARAH
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- NEW: WEDDING GIFT (EDITABLE) -->
-        <section class="py-16 px-4 bg-white">
-            <div class="max-w-2xl mx-auto text-center">
-                <h2 class="font-script text-4xl text-gray-800 mb-6">Wedding Gift</h2>
-                <p class="text-gray-600 mb-8 text-sm">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.</p>
-                
-                <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl shadow-xl w-full max-w-sm mx-auto relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-20"><i class="fas fa-university text-6xl"></i></div>
-                    <p class="text-left text-xs uppercase tracking-widest text-gray-400 mb-6">Bank Transfer</p>
-                    <h3 class="text-2xl font-mono text-center tracking-widest mb-2 editable-text">1234-5678-9000</h3>
-                    <div class="flex justify-between items-end mt-4">
-                        <p class="font-bold uppercase text-sm editable-text">BCA - Rizky Pratama</p>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-4 bg-white p-0.5 rounded">
-                    </div>
+        <!-- RSVP -->
+        <section class="py-24 bg-cream">
+            <div class="container mx-auto px-4 max-w-lg">
+                <div class="bg-white p-10 rounded-2xl shadow-xl border border-gray-100 fade-in-up text-center">
+                    <h2 class="font-serif text-3xl mb-2 text-royal-navy">Konfirmasi Kehadiran</h2>
+                    <p class="text-gray-500 mb-8 text-sm">Mohon konfirmasi kehadiran Anda untuk membantu kami mempersiapkan acara.</p>
+                    
+                    <form id="rsvp-form" onsubmit="sendToWhatsapp(event)" class="text-left space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                            <input type="text" id="guest-name" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition" placeholder="Masukkan nama Anda" required>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Jumlah</label>
+                                <select id="guest-count" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gold">
+                                    <option value="1">1 Orang</option>
+                                    <option value="2">2 Orang</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Status</label>
+                                <select id="guest-status" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gold">
+                                    <option value="Hadir">Hadir</option>
+                                    <option value="Tidak Hadir">Absen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-royal-navy text-white font-bold py-4 rounded-lg hover:bg-gold hover:text-royal-navy transition-all duration-300 shadow-lg transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-2"></i> KONFIRMASI VIA WHATSAPP
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- GIFT -->
+        <section class="py-20 bg-white text-center border-t border-gray-100">
+            <h2 class="font-script text-5xl mb-4 text-gold">Wedding Gift</h2>
+            <p class="text-gray-500 mb-10 max-w-md mx-auto text-sm leading-relaxed" data-editable="true">Doa restu Anda merupakan karunia yang sangat berarti bagi kami.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <div class="bg-gray-50 border border-gray-200 p-8 rounded-xl w-72 hover:shadow-xl hover:border-gold/50 transition duration-300">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png" alt="BCA" class="h-6 mx-auto mb-6 object-contain opacity-80">
+                    <p class="font-mono text-xl text-gray-700 mb-1 tracking-wider" data-editable="true">1234-5678-90</p>
+                    <p class="text-xs text-gray-400 mb-6" data-editable="true">a.n RIZKY PRATAMA</p>
+                    <button onclick="copyText('1234567890')" class="w-full py-2 border border-gray-300 rounded text-xs text-gray-500 hover:bg-royal-navy hover:text-white hover:border-royal-navy transition">
+                        <i class="far fa-copy mr-1"></i> SALIN NOMOR
+                    </button>
                 </div>
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer class="bg-[#0f172a] text-gray-500 text-center py-8 text-xs relative">
-            <p id="secret-btn" class="secret-trigger inline-block px-4 py-2 rounded hover:bg-white/5 transition">
-                &copy; 2025 Rizky & Putri Wedding.
-            </p>
-            <p class="text-[10px] text-gray-700 mt-2">Ketuk 5x pada copyright untuk Admin</p>
+        <footer class="bg-royal-navy text-white py-12 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+            
+            <h2 class="font-script text-4xl mb-6 text-gold relative z-10">Rizky & Putri</h2>
+            <div class="flex justify-center gap-4 mb-8 relative z-10">
+                <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-gold transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-gold transition"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            
+            <!-- SECRET TRIGGER -->
+            <div id="secret-trigger" class="relative z-10 text-[10px] text-gray-500 tracking-widest py-4 cursor-pointer hover:text-gray-400 transition">
+                © 2025 PREMIUM WEDDING INVITATION
+            </div>
         </footer>
+
     </main>
 
-    <script>
-        // --- 1. MEMBUAT ANIMASI DAUN JATUH ---
-        const leavesContainer = document.getElementById('leaves-container');
-        for (let i = 0; i < 15; i++) {
-            let leaf = document.createElement('div');
-            leaf.classList.add('leaf');
-            leaf.style.left = Math.random() * 100 + '%';
-            leaf.style.animationDuration = Math.random() * 3 + 5 + 's';
-            leaf.style.animationDelay = Math.random() * 5 + 's';
-            leavesContainer.appendChild(leaf);
-        }
-
-        // --- 2. LOGIKA BUKA UNDANGAN ---
-        function openInvitation() {
-            const container = document.getElementById('envelope-container');
-            const openingScreen = document.getElementById('opening-screen');
-            const mainWebsite = document.getElementById('main-website');
-            const music = document.getElementById('bg-music');
-            const openBtn = document.querySelector('.open-btn');
-
-            container.classList.add('open');
-            openBtn.style.opacity = '0';
+    <!-- EDIT MODAL & CONTROLS (FUNCTIONALITY PRESERVED) -->
+    <div id="edit-modal" class="fixed inset-0 bg-royal-navy/90 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl max-w-sm w-full text-center shadow-2xl">
+            <div class="text-gold text-3xl mb-4"><i class="fas fa-user-shield"></i></div>
+            <h3 class="text-xl font-serif text-royal-navy mb-2">Akses Editor</h3>
+            <p class="text-gray-400 mb-6 text-xs">Masukkan kode keamanan untuk mengubah konten.</p>
             
-            // Play music
-            music.volume = 0.5;
-            music.play().catch(e => console.log("Audio need interaction"));
+            <input type="password" id="admin-pin" class="w-full border border-gray-300 p-3 rounded-lg mb-4 text-center text-xl tracking-[0.5em] focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold" placeholder="••••">
+            
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-3 text-sm text-gray-500 hover:bg-gray-50 rounded-lg transition">Batal</button>
+                <button onclick="checkPin()" class="flex-1 py-3 text-sm bg-royal-navy text-white rounded-lg hover:bg-gold hover:text-royal-navy transition font-bold shadow-lg">MASUK</button>
+            </div>
+            <p id="pin-error" class="text-red-500 text-xs mt-4 hidden"><i class="fas fa-exclamation-circle"></i> PIN Salah</p>
+        </div>
+    </div>
 
+    <div id="editor-controls" class="fixed bottom-0 left-0 w-full bg-white border-t-4 border-gold p-4 z-50 hidden flex justify-between items-center shadow-[0_-5px_20px_rgba(0,0,0,0.1)]">
+        <div class="flex items-center gap-3">
+            <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-bold text-royal-navy uppercase tracking-wide">Mode Edit Aktif</span>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="exitEditMode()" class="px-5 py-2 bg-gray-100 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-200 transition">KELUAR</button>
+            <button onclick="saveChanges()" class="px-5 py-2 bg-gold text-white rounded-lg text-xs font-bold hover:bg-yellow-600 shadow-md transition flex items-center gap-2">
+                <i class="fas fa-save"></i> SIMPAN
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIC UTAMA ---
+        
+        function openInvitation() {
+            const wrapper = document.getElementById('envelope-wrapper');
+            const overlay = document.getElementById('envelope-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            // Animasi Amplop Baru
+            wrapper.classList.add('open');
+            
+            toggleMusic(true);
+
+            // Waktu tunggu disesuaikan dengan animasi CSS baru
             setTimeout(() => {
-                openingScreen.style.opacity = '0';
-                mainWebsite.classList.add('visible');
-                setTimeout(() => {
-                    openingScreen.style.display = 'none';
-                    document.body.style.overflowY = 'auto'; // Enable scroll
-                }, 1500); 
-            }, 2500); 
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                mainContent.classList.remove('hidden');
+                void mainContent.offsetWidth; 
+                mainContent.classList.remove('opacity-0');
+                checkScroll();
+            }, 1200); // Sedikit lebih lama agar animasi kartu keluar selesai
         }
 
-        // --- 3. LOGIKA ADMIN & EDIT (TERINTEGRASI) ---
-        let clickCount = 0;
-        const secretBtn = document.getElementById('secret-btn');
-        const savePanel = document.getElementById('save-panel');
-        const editableElements = document.querySelectorAll('.editable-text');
-        const mainNameEl = document.getElementById('main-name');
-        const envelopeNameEl = document.getElementById('envelope-name');
+        // --- MUSIK ---
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-control');
+        let isPlaying = false;
 
-        secretBtn.addEventListener('click', () => {
-            clickCount++;
-            setTimeout(() => { clickCount = 0; }, 2000);
+        function toggleMusic(forcePlay = false) {
+            if (forcePlay || !isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicBtn.classList.remove('paused');
+                    musicBtn.innerHTML = '<i class="fas fa-compact-disc fa-spin"></i>';
+                }).catch(e => console.log("Audio autoplay blocked"));
+            } else {
+                audio.pause();
+                isPlaying = false;
+                musicBtn.classList.add('paused');
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            }
+        }
 
-            if (clickCount === 5) {
-                const password = prompt("Masukkan PIN Admin (1234):");
-                if (password === "1234") {
-                    activateEditMode();
-                } else {
-                    alert("PIN Salah!");
+        // --- SINKRONISASI ---
+        const sourceNameElement = document.getElementById('main-names');
+        const envelopeNameElement = document.querySelector('.sync-names-display');
+        const sealTextElement = document.getElementById('wax-seal-text');
+
+        function updateSealAndEnvelope(text) {
+            if(envelopeNameElement) envelopeNameElement.innerText = text;
+            if (text.includes('&')) {
+                const parts = text.split('&');
+                const initial1 = parts[0].trim().charAt(0).toUpperCase();
+                const initial2 = parts[1].trim().charAt(0).toUpperCase();
+                sealTextElement.innerText = `${initial1}&${initial2}`;
+            } else {
+                sealTextElement.innerText = text.charAt(0).toUpperCase();
+            }
+        }
+
+        sourceNameElement.addEventListener('input', function() {
+            updateSealAndEnvelope(this.innerText);
+        });
+
+        // --- SCROLL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-                clickCount = 0;
+            });
+        }, { threshold: 0.1 });
+
+        function checkScroll() {
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        // --- LEAVES (Optimized) ---
+        function createLeaves() {
+            const container = document.getElementById('leaf-container');
+            const isMobile = window.innerWidth < 768;
+            const leafCount = isMobile ? 10 : 25; 
+
+            for (let i = 0; i < leafCount; i++) {
+                const leaf = document.createElement('div');
+                leaf.classList.add('leaf');
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.animation = `fall ${Math.random() * 15 + 10}s linear infinite`; // Lebih lambat & elegan
+                leaf.style.animationDelay = Math.random() * 5 + 's';
+                leaf.style.opacity = Math.random() * 0.5 + 0.2;
+                container.appendChild(leaf);
+            }
+        }
+
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes fall {
+                0% { transform: translateY(-10vh) rotate(0deg); }
+                100% { transform: translateY(110vh) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+        createLeaves();
+
+        // --- SECURITY & EDIT ---
+        let tapCount = 0;
+        const secretTrigger = document.getElementById('secret-trigger');
+        const editModal = document.getElementById('edit-modal');
+        const pinInput = document.getElementById('admin-pin');
+        const editorControls = document.getElementById('editor-controls');
+        const CORRECT_PIN = "1234";
+
+        secretTrigger.addEventListener('click', () => {
+            tapCount++;
+            if (tapCount === 5) {
+                editModal.classList.remove('hidden');
+                pinInput.value = "";
+                pinInput.focus();
+                tapCount = 0;
             }
         });
 
-        function activateEditMode() {
-            alert("MODE EDIT AKTIF! \n\nFitur Baru:\n- Ganti 4 Foto Galeri\n- Edit Rekening & Ayat\n- Nama di amplop otomatis sinkron.");
-            document.body.classList.add('edit-mode-active');
-            savePanel.style.display = 'block';
-            
-            // Re-select all elements in case dynamic
-            document.querySelectorAll('.editable-text').forEach(el => {
-                el.setAttribute('contenteditable', 'true');
-            });
-
-            // Sinkronisasi Nama
-            mainNameEl.addEventListener('input', function() {
-                envelopeNameEl.innerText = mainNameEl.innerText;
-            });
+        function closeModal() {
+            editModal.classList.add('hidden');
+            document.getElementById('pin-error').classList.add('hidden');
         }
 
-        // --- 4. GANTI GAMBAR (UNIVERSAL UNTUK GALERI & UTAMA) ---
-        function changeImage(input, imgId) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(imgId).src = e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
+        function checkPin() {
+            if (pinInput.value === CORRECT_PIN) {
+                closeModal();
+                enableEditMode();
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+                pinInput.value = "";
             }
         }
 
-        // --- 5. SIMPAN ---
-        function downloadNewFile() {
-            document.body.classList.remove('edit-mode-active');
-            savePanel.style.display = 'none';
-            document.querySelectorAll('.editable-text').forEach(el => {
-                el.removeAttribute('contenteditable');
+        function enableEditMode() {
+            document.body.classList.add('editing-active');
+            editorControls.classList.remove('hidden');
+            document.querySelectorAll('[data-editable="true"]').forEach(el => {
+                el.contentEditable = "true";
+                el.classList.add('editable-active');
             });
-
-            let htmlContent = document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: "text/html" });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "undangan-mewah.html";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            alert("File berhasil disimpan! Silakan upload.");
-            activateEditMode();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Menggunakan custom alert atau modal lebih baik, tapi alert ok untuk MVP
+            alert("Editor Aktif: Klik teks untuk mengedit.");
         }
 
-        document.body.style.overflow = 'hidden';
+        function exitEditMode() {
+            document.body.classList.remove('editing-active');
+            editorControls.classList.add('hidden');
+            document.querySelectorAll('[data-editable="true"]').forEach(el => {
+                el.contentEditable = "false";
+                el.classList.remove('editable-active');
+            });
+        }
+
+        function saveChanges() {
+            const dataToSave = {};
+            document.querySelectorAll('[data-editable="true"]').forEach((el, index) => {
+                dataToSave[index] = el.innerText;
+            });
+            localStorage.setItem('wedding_invitation_data', JSON.stringify(dataToSave));
+            alert("Perubahan Berhasil Disimpan!");
+            exitEditMode();
+        }
+
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('wedding_invitation_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.querySelectorAll('[data-editable="true"]').forEach((el, index) => {
+                    if (data[index]) el.innerText = data[index];
+                });
+                updateSealAndEnvelope(document.getElementById('main-names').innerText);
+            }
+        });
+
+        // --- UTILS ---
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Nomor rekening tersalin");
+        }
+
+        function sendToWhatsapp(e) {
+            e.preventDefault();
+            const name = document.getElementById('guest-name').value;
+            const count = document.getElementById('guest-count').value;
+            const status = document.getElementById('guest-status').value;
+            const phoneNumber = "628123456789"; 
+            const message = `Halo, saya ${name}. \nKonfirmasi: ${status} \nJumlah Tamu: ${count}.`;
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
     </script>
 </body>
 </html>
